@@ -29,7 +29,6 @@ echo "$QEMU_XLNX_PATH/qemu-system-microblazeel -M microblaze-fdt -nographic \
 -kernel $HVL_WORKSPACE_PATH/xilinx-zcu102-2020.2/pre-built/linux/images/pmu_rom_qemu_sha3.elf \
 -device loader,file=$HVL_WORKSPACE_PATH/xilinx-zcu102-2020.2/pre-built/linux/images/pmufw.elf -machine-path /tmp
 "
-echo
 echo 'USE THIS'
 echo "$QEMU_XLNX_PATH/qemu-system-microblazeel -M microblaze-fdt -display none \
 -hw-dtb $HVL_WORKSPACE_PATH/out/images/zynqmp-qemu-multiarch-pmu.dtb \
@@ -56,7 +55,6 @@ echo "$QEMU_XLNX_PATH/qemu-system-aarch64 -M arm-generic-fdt \
 -drive file=$HVL_WORKSPACE_PATH/out/linux-sd.wic,if=sd,format=raw,index=1 \
 -device loader,file=$HVL_WORKSPACE_PATH/xilinx-zcu102-2020.2/pre-built/linux/images/u-boot.elf
 "
-echo
 echo 'USE THIS'
 echo "$QEMU_XLNX_PATH/qemu-system-aarch64 -M arm-generic-fdt \
 -hw-dtb $HVL_WORKSPACE_PATH/out/images/zynqmp-qemu-multiarch-arm.dtb \
@@ -77,8 +75,7 @@ echo "$QEMU_XLNX_PATH/qemu-system-aarch64 -M arm-generic-fdt \
 
 echo "U-Boot configuration: "
 echo 'OLD COMMAND'
-echo '
-setenv bootargs "earlycon clk_ignore_unused root=/dev/mmcblk0p2 ro rootwait earlyprintk debug uio_pdrv_genirq.of_id=generic-uio";
+echo 'setenv bootargs "earlycon clk_ignore_unused root=/dev/mmcblk0p2 ro rootwait earlyprintk debug uio_pdrv_genirq.of_id=generic-uio";
 dhcp 200000 Image; dhcp 100000 dtb.dtb;
 setenv initrd_high 78000000; booti 200000 - 100000;'
 echo
@@ -99,12 +96,11 @@ echo
 #4
 echo 'FOURTH WINDOW'
 echo
-echo '
-After booting, Linux on A53 can also be accessed as:
+echo 'After booting, Linux on A53 can also be accessed as:
 ssh -oHostKeyAlgorithms=+ssh-rsa root@127.0.0.1 -p 30022
 '
 echo 'echo start >/sys/class/remoteproc/remoteproc0/state'
-
+echo
 #/home/dan/projects/cto/appstar/src/zynq_ipi/hvl/binaries/u-boot_d1.elf
 
 
