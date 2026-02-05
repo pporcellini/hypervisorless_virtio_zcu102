@@ -1,0 +1,47 @@
+#!/bin/bash
+set -x
+
+main (){
+# Image file
+DISK_IMAGE="zcu102-linux.img"
+DISK_SIZE=8G   # size disk image
+
+# Image files for single partitions
+BOOT_IMG="boot.vfat"
+ROOT_IMG="root.ext4"
+BOOT_SIZE=1G
+ROOT_SIZE=6G
+
+# Partition labels
+BOOT_LABEL="boot"
+ROOT_LABEL="root"
+
+# Directory with files to be included
+BOOT_DIR="boot"     # BOOT.BIN, image, system.dtb
+ROOT_DIR="rootfs"        # complete root filesystem
+
+
+# ====================
+# Checks
+# ====================
+[ -d "$BOOT_DIR" ] || { echo "Missing directory $BOOT_DIR"; exit 1; }
+[ -d "$ROOT_DIR" ] || { echo "Missing directory $ROOT_DIR"; exit 1; }
+
+# ====================
+# 1. Create partition BOOT (VFAT)
+# ====================
+new-vfat "$BOOT_IMG" "$BOOT_SIZE" "$BOOT_LABEL" "$BOOT_DIR"
+
+# ====================
+# 2. Create partition ROOT (EXT4)
+# ====================
+new-ext4 "$ROOT_IMG" "$ROOT_SIZE" "$ROOT_LABEL" "$ROOT_DIR"
+
+# ====================
+# 3. Create final MBR image with two partitions
+# ====================
+new-mbr-image "sd/$DISK_IMAGE" "$DISK_SIZE" "$BOOT_IMG" "$ROOT_IMG"
+
+echo "image created successfully: $DISK_IMAGE"
+}
+
